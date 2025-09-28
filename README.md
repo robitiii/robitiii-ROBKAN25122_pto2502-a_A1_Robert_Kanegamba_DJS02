@@ -1,9 +1,9 @@
-# DJS01 Vanila JS Podcast App
+# DJS01 Web Components Podcast App
 
-This project is a **modular vanilla JavaScript application** that displays a list of podcasts as cards and shows detailed information in a modal when a card is clicked. It uses **factory functions**, **utility services**, and **clean folder structure** to emphasise good software design practices.
+This project is a **modern vanilla JavaScript application** that displays a list of podcasts as cards and shows detailed information in a modal when a card is clicked. It uses **Web Components**, **Shadow DOM**, and **custom elements** to demonstrate modern web development practices.
 
-> **Note:** This solution focuses on **functionality and modular JavaScript design**. It does **not include extensive styling** or visual polish.  
-> You are encouraged to **customise the look and feel** of the app using your own CSS or Tailwind.
+> **Note:** This solution focuses on **Web Components architecture** and **encapsulation**. The styling is encapsulated within each component using Shadow DOM.  
+> You are encouraged to **customise the look and feel** of the app by modifying the component styles.
 
 ## Project Structure
 
@@ -11,15 +11,15 @@ This project is a **modular vanilla JavaScript application** that displays a lis
 /src
 │
 ├── /components
-│ ├── createPodcastCard.js // Factory to generate podcast preview cards
-│ └── createModal.js // Modal controller factory (open/close/update content)
+│ ├── PodcastCard.js // Web Component for podcast cards with Shadow DOM
+│ └── PodcastModal.js // Web Component for modal with Shadow DOM
 │
 ├── /utils
 │ ├── DateUtils.js // Utility for formatting date strings
 │ └── GenreService.js // Service to resolve genre IDs into names
 │
 ├── /views
-│ └── createGrid.js // Grid renderer factory that places cards on the page
+│ └── createGrid.js // Grid renderer that uses Web Components
 │
 ├── data.js // Sample data: podcasts, genres, seasons
 └── index.js // Application entry point and setup
@@ -27,49 +27,52 @@ This project is a **modular vanilla JavaScript application** that displays a lis
 
 ## Features
 
-- Renders podcast cards dynamically
+- Renders podcast cards dynamically using Web Components
 - Opens a modal with more information on click
 - Uses genre and season data for display
 - Formats dates cleanly and consistently
-- Follows **modular design** using **factory functions**
+- Follows **Web Components architecture** with **Shadow DOM encapsulation**
+- Custom events for component communication
+- Responsive design with encapsulated styling
 
 ## Key Takeaways
 
-### 1. **Modular Design**
+### 1. **Web Components Architecture**
 
-- Code is split into small, focused modules.
-- Each file has a **single responsibility**, making it easier to understand and maintain.
+- Uses custom elements (`<podcast-card>`, `<podcast-modal>`) for component-based architecture.
+- Each component encapsulates its own structure, styling, and behavior.
 
-### 2. **Factory Functions**
+### 2. **Shadow DOM Encapsulation**
 
-- Modules like `createPodcastCard`, `createGrid`, and `createModal` return objects that encapsulate logic.
-- This promotes **encapsulation** and **reuse**.
+- Components use Shadow DOM to encapsulate styles and prevent CSS conflicts.
+- Each component is self-contained with its own styling.
 
   Example:
 
   ```js
-  const grid = createGrid();
-  grid.render(podcastList);
+  const card = document.createElement('podcast-card');
+  card.setAttribute('data-title', podcast.title);
   ```
 
-### 3. Abstraction
+### 3. **Custom Events**
 
-- Internals (like how date formatting or genre mapping works) are hidden behind clear interfaces (`DateUtils.format, GenreService.getNames`).
+- Components communicate through custom events (`podcastSelected`).
+- This promotes loose coupling between components.
 
-- Consumers don’t need to know how something works, only what it does.
+### 4. **Encapsulation**
 
-### 4. SRP (Single Responsibility Principle)
+- Each Web Component encapsulates its own:
+  - HTML structure
+  - CSS styling
+  - JavaScript behavior
+  - Event handling
 
-- Each module does one thing:
-  - `DateUtils.js` – formats dates
-  - `createModal.js` – controls the modal
-  - `createPodcastCard.js` – creates UI for one podcast
-  - `createGrid.js` – manages layout and rendering
+### 5. **Modern Web Standards**
 
-### 5. Clear Entry Point
-
-- `index.js` acts as the orchestrator, setting up the app and wiring components together.
-- This keeps global logic and setup in one place.
+- Uses native Web Components API
+- No external dependencies
+- Future-proof architecture
+- Reusable across different projects
 
 ## How to Run
 
