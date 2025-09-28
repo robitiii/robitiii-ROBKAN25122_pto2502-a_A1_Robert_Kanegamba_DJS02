@@ -215,3 +215,8 @@ class PodcastCard extends HTMLElement {
     }));
   }
 }
+
+// Register the custom element
+customElements.define('podcast-card', PodcastCard);
+
+export { PodcastCard };
