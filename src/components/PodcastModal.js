@@ -12,3 +12,16 @@ import { seasons }  from "../data.js";
  * @example
  * <podcast-modal></podcast-modal>
  */
+class PodcastModal extends HTMLElement {
+  constructor() {
+    super();
+    
+    // Create shadow DOM
+    this.attachShadow({ mode: 'open' });
+    
+    // Bind methods to preserve context
+    this.handleClose = this.handleClose.bind(this);
+    this.handleBackdropClick = this.handleBackdropClick.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+  }
+}
