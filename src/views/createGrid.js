@@ -24,4 +24,13 @@ export const createGrid = () => {
     }
     return modal;
   };
+   /**
+   * Handles podcast card selection
+   * @param {CustomEvent} event - The podcastSelected event
+   */
+  function handlePodcastSelected(event) {
+    const podcastData = event.detail;
+    const modal = getModal();
+    modal.open(podcastData);
+  }
 };
