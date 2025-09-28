@@ -55,7 +55,6 @@ class PodcastCard extends HTMLElement {
       this.render();
     }
   }
-}
 
 /**
    * Define which attributes to observe for changes
@@ -174,3 +173,45 @@ class PodcastCard extends HTMLElement {
       }
     }
   }
+
+  /**
+   * Attaches event listeners to the component
+   */
+  attachEventListeners() {
+    const card = this.shadowRoot.querySelector('.card');
+    if (card) {
+      card.addEventListener('click', this.handleClick);
+    }
+  }
+
+  /**
+   * Removes event listeners from the component
+   */
+  removeEventListeners() {
+    const card = this.shadowRoot.querySelector('.card');
+    if (card) {
+      card.removeEventListener('click', this.handleClick);
+    }
+  }
+
+  /**
+   * Handles click events on the card
+   */
+  handleClick() {
+    const podcastData = {
+      id: this.getAttribute('data-id'),
+      title: this.getAttribute('data-title'),
+      image: this.getAttribute('data-image'),
+      seasons: this.getAttribute('data-seasons'),
+      genres: this.getAttribute('data-genres'),
+      updated: this.getAttribute('data-updated')
+    };
+
+    // Dispatch custom event
+    this.dispatchEvent(new CustomEvent('podcastSelected', {
+      detail: podcastData,
+      bubbles: true,
+      composed: true
+    }));
+  }
+}
