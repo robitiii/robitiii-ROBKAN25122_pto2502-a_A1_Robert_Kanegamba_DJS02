@@ -198,4 +198,36 @@ class PodcastModal extends HTMLElement {
       </div>
     `;
   }
+   /**
+   * Attaches event listeners to the modal
+   */
+  attachEventListeners() {
+    const closeBtn = this.shadowRoot.getElementById('close-btn');
+    const modalContent = this.shadowRoot.querySelector('.modal-content');
+    
+    if (closeBtn) {
+      closeBtn.addEventListener('click', this.handleClose);
+    }
+    
+    if (modalContent) {
+      modalContent.addEventListener('click', (e) => e.stopPropagation());
+    }
+    
+    this.addEventListener('click', this.handleBackdropClick);
+    document.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  /**
+   * Removes event listeners from the modal
+   */
+  removeEventListeners() {
+    const closeBtn = this.shadowRoot.getElementById('close-btn');
+    
+    if (closeBtn) {
+      closeBtn.removeEventListener('click', this.handleClose);
+    }
+    
+    this.removeEventListener('click', this.handleBackdropClick);
+    document.removeEventListener('keydown', this.handleKeyDown);
+  }
 }
