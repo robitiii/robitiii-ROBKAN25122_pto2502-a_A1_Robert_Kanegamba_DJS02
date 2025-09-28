@@ -274,4 +274,34 @@ class PodcastModal extends HTMLElement {
     this.removeAttribute('open');
     document.body.style.overflow = ''; // Restore scrolling
   }
+
+  /**
+   * Updates the modal content with podcast details
+   * @param {Object} podcast - Podcast object with all necessary data
+   */
+  updateContent(podcast) {
+    const titleEl = this.shadowRoot.getElementById('modal-title');
+    const imageEl = this.shadowRoot.getElementById('modal-image');
+    const descriptionEl = this.shadowRoot.getElementById('modal-description');
+    const genresEl = this.shadowRoot.getElementById('modal-genres');
+    const updatedEl = this.shadowRoot.getElementById('modal-updated');
+    const seasonListEl = this.shadowRoot.getElementById('season-list');
+
+    if (titleEl) titleEl.textContent = podcast.title || '';
+    if (imageEl) imageEl.src = podcast.image || '';
+    if (imageEl) imageEl.alt = `${podcast.title || ''} cover`;
+    if (descriptionEl) descriptionEl.textContent = podcast.description || '';
+
+    // Update genres
+    if (genresEl && podcast.genres) {
+      try {
+        const genreIds = JSON.parse(podcast.genres);
+        const genreNames = GenreService.getNames(genreIds);
+        genresEl.innerHTML = genreNames.map(name => `<span class="tag">${name}</span>`).join('');
+      } catch (error) {
+        console.warn('Invalid genres JSON:', podcast.genres);
+        genresEl.innerHTML = '';
+      }
+    }
+}
 }
