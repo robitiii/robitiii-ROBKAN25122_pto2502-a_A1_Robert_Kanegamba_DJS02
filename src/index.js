@@ -1,4 +1,5 @@
 import { podcasts } from "./data.js";
+import { PodcastModal } from "./components/createModal.js";
 import { createGrid } from "./views/createGrid.js";
 
 /**
@@ -9,6 +10,8 @@ import { createGrid } from "./views/createGrid.js";
 function init() {
   const grid = createGrid();
   grid.render(podcasts);
+  const modal = new PodcastModal();
+  document.body.appendChild(modal);
 }
 
 init();
