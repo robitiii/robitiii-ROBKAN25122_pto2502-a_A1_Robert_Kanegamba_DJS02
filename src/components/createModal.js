@@ -1,59 +1,58 @@
 import { GenreService } from "../utils/GenreService.js";
 import { DateUtils } from "../utils/DateUtils.js";
-import { seasons } from "../data.js";
 
 /**
- * Modal Controller - Controls the podcast details modal.
- *
- * @principle SRP - Handles modal logic only (open, close, update content).
- * @principle OCP - Open/Closed Principle: New fields (e.g. ratings) could be added to modal without modifying external usage.
+ * PodcastCard Web Component
+ * 
+ * A custom element that displays podcast information in a card format.
+ * Encapsulates structure, style, and behavior using Shadow DOM.
+ * 
+ * @customElement podcast-card
+ * @example
+ * <podcast-card 
+ *   data-id="123" 
+ *   data-title="Podcast Title" 
+ *   data-image="image.jpg" 
+ *   data-seasons="5" 
+ *   data-genres="[1,2]" 
+ *   data-updated="2022-11-01T07:00:00.000Z">
+ * </podcast-card>
  */
-export const createModal = (() => {
-  const el = (id) => document.getElementById(id);
-  const modal = el("modal");
-
-  /**
-   * Updates the modal content with podcast details.
-   * @param {Object} podcast - Podcast object.
-   */
-  function updateContent(podcast) {
-    el("modalImage").src = podcast.image;
-    el("modalTitle").textContent = podcast.title;
-    el("modalDesc").textContent = podcast.description;
-
-    el("modalGenres").innerHTML = GenreService.getNames(podcast.genres)
-      .map((g) => `<span class="tag">${g}</span>`)
-      .join("");
-
-    el("modalUpdated").textContent = DateUtils.format(podcast.updated);
-
-    const seasonData =
-      seasons.find((s) => s.id === podcast.id)?.seasonDetails || [];
-    el("seasonList").innerHTML = seasonData
-      .map(
-        (s, index) => `
-          <li class="season-item">
-            <strong class="season-title">Season ${index + 1}: ${
-          s.title
-        }</strong>
-            <span class="episodes">${s.episodes} episodes</span>
-          </li>`
-      )
-      .join("");
+class PodcastCard extends HTMLElement {
+  constructor() {
+    super();
+    
+    // Create shadow DOM
+    this.attachShadow({ mode: 'open' });
+    
+    // Bind methods to preserve context
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  return {
-    /**
-     * Opens the modal with podcast details.
-     * @param {Object} podcast - Podcast object.
-     */
-    open(podcast) {
-      updateContent(podcast);
-      modal.classList.remove("hidden");
-    },
-    /** Closes the modal. */
-    close() {
-      modal.classList.add("hidden");
-    },
-  };
-})();
+  /**
+   * Called when the element is connected to the DOM
+   */
+  connectedCallback() {
+    this.render();
+    this.attachEventListeners();
+  }
+
+  /**
+   * Called when the element is disconnected from the DOM
+   */
+  disconnectedCallback() {
+    this.removeEventListeners();
+  }
+
+  /**
+   * Called when observed attributes change
+   * @param {string} name - The attribute name that changed
+   * @param {string} oldValue - The previous value
+   * @param {string} newValue - The new value
+   */
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue !== newValue) {
+      this.render();
+    }
+  }
+}
