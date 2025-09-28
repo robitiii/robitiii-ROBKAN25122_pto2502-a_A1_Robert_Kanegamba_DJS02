@@ -1,25 +1,27 @@
-import { createPodcastCard } from "../components/createPodcastCard.js";
-import { createModal } from "../components/createModal.js";
+import { PodcastModal } from "../components/PodcastModal.js";
 
 /**
- * Grid Renderer - Responsible for rendering the grid of podcast cards.
+ * Grid Renderer - Responsible for rendering the grid of podcast cards using Web Components.
  *
  * @principle SRP - Manages layout and rendering only; delegates card creation and modal logic elsewhere.
  */
 export const createGrid = () => {
   const container = document.getElementById("podcastGrid");
+  let modal = null;
 
-  return {
-    /**
-     * Renders a list of podcast cards into the grid.
-     * @param {Object[]} podcastList - Array of podcast objects.
-     */
-    render(podcastList) {
-      container.innerHTML = "";
-      podcastList.forEach((p) => {
-        const card = createPodcastCard(p, createModal.open);
-        container.appendChild(card);
-      });
-    },
+  /**
+   * Gets or creates the modal instance.
+   * @returns {PodcastModal} The modal Web Component instance.
+   */
+  const getModal = () => {
+    if (!modal) {
+      modal = document.querySelector("podcast-modal");
+      if (!modal){
+        modal = document.createElement("podcast-modal");
+        document.body.appendChild(modal);
+      }
+      
+    }
+    return modal;
   };
 };
