@@ -303,5 +303,31 @@ class PodcastModal extends HTMLElement {
         genresEl.innerHTML = '';
       }
     }
+    // Update last updated date
+    if (updatedEl && podcast.updated) {
+      try {
+        updatedEl.textContent = DateUtils.format(podcast.updated);
+      } catch (error) {
+        updatedEl.textContent = 'Updated recently';
+      }
+    }
+
+    // Update seasons
+    if (seasonListEl && podcast.id) {
+      const seasonData = seasons.find(s => s.id === podcast.id)?.seasonDetails || [];
+      seasonListEl.innerHTML = seasonData
+        .map((season, index) => `
+          <li class="season-item">
+            <strong class="season-title">Season ${index + 1}: ${season.title}</strong>
+            <span class="episodes">${season.episodes} episodes</span>
+          </li>
+        `)
+        .join('');
+    }
 }
+
 }
+// Register the custom element
+customElements.define('podcast-modal', PodcastModal);
+
+export { PodcastModal };
