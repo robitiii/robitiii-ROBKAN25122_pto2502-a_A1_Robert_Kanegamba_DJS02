@@ -142,3 +142,20 @@ class PodcastCard extends HTMLElement {
     this.updateGenres(genres);
     this.updateUpdatedText(updated);
   }
+
+   /**
+   * Updates the genre tags display
+   * @param {string} genresJson - JSON string of genre IDs
+   */
+  updateGenres(genresJson) {
+    try {
+      const genreIds = JSON.parse(genresJson);
+      const genreTags = this.shadowRoot.getElementById('genre-tags');
+      if (genreTags) {
+        const genreNames = GenreService.getNames(genreIds);
+        genreTags.innerHTML = genreNames.map(name => `<span class="tag">${name}</span>`).join('');
+      }
+    } catch (error) {
+      console.warn('Invalid genres JSON:', genresJson);
+    }
+  }
