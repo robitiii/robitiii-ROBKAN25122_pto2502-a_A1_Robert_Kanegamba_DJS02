@@ -1,4 +1,4 @@
-import { PodcastModal } from "../components/PodcastModal.js";
+import { PodcastModal } from "../components/createModal.js";
 
 /**
  * Grid Renderer - Responsible for rendering the grid of podcast cards using Web Components.
@@ -39,6 +39,11 @@ export const createGrid = () => {
      * @param {Object[]} podcastList - Array of podcast objects.
      */
     render(podcastList) {
+      if (!container) {
+        console.error('Container #podcastGrid not found in DOM.');
+        return;
+      }
+      
       container.innerHTML = "";
       // Add event listener for podcast selection
       container.addEventListener('podcastSelected', handlePodcastSelected);
