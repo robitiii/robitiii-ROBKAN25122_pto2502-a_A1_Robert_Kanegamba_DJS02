@@ -16,29 +16,11 @@
     </header>
 
     <main id="podcastGrid" class="grid"></main>
-
-    <!-- Modal -->
-    <div id="modal" class="modal hidden">
-      <div class="modal-content">
-        <div class="title-section">
-          <h2 id="modalTitle"></h2>
-          <button class="close-btn" id="closeModal">&times;</button>
-        </div>
-        <div class="banner">
-          <img id="modalImage" class="modal-img" />
-          <div class="info-section">
-            <h3>Description</h3>
-            <p id="modalDesc"></p>
-            <h3>Genres</h3>
-            <div id="modalGenres" class="tags"></div>
-            <p id="modalUpdated" class="modal-updated-text"></p>
-          </div>
-        </div>
-        <h3>Seasons</h3>
-        <ul id="seasonList" class="season-list"></ul>
-      </div>
-    </div>
-
+ <!-- Import Web Components to register them BEFORE using them -->
+    <script type="module" src="./src/components/PodcastCard.js"></script>
+    <script type="module" src="./src/components/createModal.js"></script>
+    
+    <!-- Main application script -->
     <script type="module" defer src="./src/index.js"></script>
   </body>
 </html>
