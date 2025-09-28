@@ -159,3 +159,18 @@ class PodcastCard extends HTMLElement {
       console.warn('Invalid genres JSON:', genresJson);
     }
   }
+
+   /**
+   * Updates the updated text display
+   * @param {string} dateStr - ISO date string
+   */
+  updateUpdatedText(dateStr) {
+    const updatedElement = this.shadowRoot.getElementById('updated-text');
+    if (updatedElement && dateStr) {
+      try {
+        updatedElement.textContent = DateUtils.format(dateStr);
+      } catch (error) {
+        updatedElement.textContent = 'Updated recently';
+      }
+    }
+  }
