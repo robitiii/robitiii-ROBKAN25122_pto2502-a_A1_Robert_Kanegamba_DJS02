@@ -24,4 +24,20 @@ class PodcastModal extends HTMLElement {
     this.handleBackdropClick = this.handleBackdropClick.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
+
+  /**
+   * Called when the element is connected to the DOM
+   */
+  connectedCallback() {
+    this.render();
+    this.attachEventListeners();
+  }
+
+  /**
+   * Called when the element is disconnected from the DOM
+   */
+  disconnectedCallback() {
+    this.removeEventListeners();
+  }
+
 }
