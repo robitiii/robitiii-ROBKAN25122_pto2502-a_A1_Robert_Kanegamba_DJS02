@@ -230,4 +230,48 @@ class PodcastModal extends HTMLElement {
     this.removeEventListener('click', this.handleBackdropClick);
     document.removeEventListener('keydown', this.handleKeyDown);
   }
+
+  /**
+   * Handles close button clicks
+   */
+  handleClose() {
+    this.close();
+  }
+
+  /**
+   * Handles backdrop clicks (closes modal)
+   */
+  handleBackdropClick(event) {
+    if (event.target === this) {
+      this.close();
+    }
+  }
+
+  /**
+   * Handles keyboard events (ESC key closes modal)
+   * @param {KeyboardEvent} event - The keyboard event
+   */
+  handleKeyDown(event) {
+    if (event.key === 'Escape' && this.hasAttribute('open')) {
+      this.close();
+    }
+  }
+
+  /**
+   * Opens the modal with podcast data
+   * @param {Object} podcast - The podcast data object
+   */
+  open(podcast) {
+    this.updateContent(podcast);
+    this.setAttribute('open', '');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  }
+
+  /**
+   * Closes the modal
+   */
+  close() {
+    this.removeAttribute('open');
+    document.body.style.overflow = ''; // Restore scrolling
+  }
 }
